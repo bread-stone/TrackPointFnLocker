@@ -11,6 +11,7 @@ namespace TrackPointFnLocker
             InitializeComponent();
             hooker = new KeybdHooker();
             rBtn_Enable.Enabled = true;
+            rBtn_FnCtrlNone.Enabled = true;
             this.Load += Form1_Load;
             exitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
         }
@@ -19,14 +20,7 @@ namespace TrackPointFnLocker
         {
             hooker.Start();
         }
-               
-        private void rBtn_Enable_CheckedChanged(object sender, EventArgs e) {
-            hooker.Resume();
-        }
-
-        private void rBtn_Disable_CheckedChanged(object sender, EventArgs e) {
-            hooker.Pause();
-        }
+        
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e) {
             Show();
@@ -66,6 +60,22 @@ namespace TrackPointFnLocker
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             System.Diagnostics.Process.Start("https://github.com/bread-stone/TrackPointFnLocker");
+        }
+
+        private void rBtn_Enable_CheckedChanged(object sender, EventArgs e) {
+            hooker.ResumeFnLock();
+        }
+
+        private void rBtn_Disable_CheckedChanged(object sender, EventArgs e) {
+            hooker.PauseFnLock();
+        }
+
+        private void rBtn_FnCtrlSwap_CheckedChanged(object sender, EventArgs e) {
+            hooker.SwapFnCtrl();
+        }
+
+        private void rBtn_FnCtrlNone_CheckedChanged(object sender, EventArgs e) {
+            hooker.NormalFnCtrl();
         }
     }
 }
