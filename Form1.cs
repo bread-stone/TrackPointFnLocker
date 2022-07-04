@@ -10,14 +10,15 @@ namespace TrackPointFnLocker
         {
             InitializeComponent();
             hooker = new KeybdHooker();
-            rBtn_Enable.Enabled = true;
-            rBtn_FnCtrlNone.Enabled = true;
+            rBtn_Enable.Checked = true;
+            rBtn_FnCtrlNone.Checked = true;
             this.Load += Form1_Load;
             exitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            
             hooker.Start();
         }
         
