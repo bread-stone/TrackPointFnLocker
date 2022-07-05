@@ -6,6 +6,9 @@ using System.Text;
 
 namespace TrackPointFnLocker {
     internal class RegHelper {
+
+        
+
         public static void SetRestart() {
             SetValue("restart", 1);
         }
@@ -15,8 +18,12 @@ namespace TrackPointFnLocker {
 
         public static int getRestart() {
             try {
-                return (int)GetValue("restart");
-            } catch(Exception e) {
+                object obj = GetValue("restart");
+                if (obj != null)
+                    return (int)obj;
+                else
+                    return 0;
+            } catch(NullReferenceException e) {
                 return 0;
             }            
         }
@@ -30,8 +37,32 @@ namespace TrackPointFnLocker {
 
         public static int getAdmin() {
             try {
-                return (int)GetValue("admin");
-            } catch (Exception e) {
+                object obj = GetValue("admin");
+                if (obj != null)
+                    return (int)obj;
+                else
+                    return 0;
+            } catch (NullReferenceException e) {
+                return 0;
+            }
+        }
+
+        public static void SetFnLock() {
+            SetValue("fnlock", 1);
+        }
+
+        public static void ResetFnLock() {
+            SetValue("fnlock", 0);
+        }
+
+        public static int getFnLock() {
+            try {
+                object obj = GetValue("fnlock");
+                if (obj != null)
+                    return (int)obj;
+                else
+                    return 0;
+            } catch (NullReferenceException e) {
                 return 0;
             }
         }
@@ -45,7 +76,42 @@ namespace TrackPointFnLocker {
         }
 
         private static RegistryKey getSubKey() {
-            return Registry.CurrentUser.CreateSubKey("Software").CreateSubKey("TPFnLock");
+            return Registry.CurrentUser.CreateSubKey("SOFTWARE").CreateSubKey("TPFnLock");
+        }
+
+
+        public static void AddStartUp(String executablePath) {
+            using (var regKey = GetRegKey(_startupRegPath, true)) {
+                try {
+                    // 키가 이미 등록돼 있지 않을때만 등록
+                    if (regKey.GetValue("TPFnLock") == null)
+                        regKey.SetValue("TPFnLock", executablePath);
+
+                    regKey.Close();
+                } catch (Exception ex) {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+        }
+
+        public static void RemoveStartup() {
+            using (var regKey = GetRegKey(_startupRegPath, true)) {
+                try {
+                    // 키가 이미 존재할때만 제거
+                    if (regKey.GetValue("TPFnLock") != null)
+                        regKey.DeleteValue("TPFnLock", false);
+
+                    regKey.Close();
+                } catch (Exception ex) {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+        }
+
+        private static readonly string _startupRegPath =
+            @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
+        private static RegistryKey GetRegKey(string regPath, bool writable) {
+            return Registry.CurrentUser.OpenSubKey(regPath, writable);
         }
     }
 }

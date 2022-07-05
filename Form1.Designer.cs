@@ -30,9 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rBtn_Disable = new System.Windows.Forms.RadioButton();
-            this.rBtn_Enable = new System.Windows.Forms.RadioButton();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,45 +39,13 @@
             this.rBtn_FnCtrlSwap = new System.Windows.Forms.RadioButton();
             this.button1 = new System.Windows.Forms.Button();
             this.lb_privilege = new System.Windows.Forms.Label();
-            this.groupBox1.SuspendLayout();
+            this.gBox_Admin = new System.Windows.Forms.GroupBox();
+            this.chk_StartUp = new System.Windows.Forms.CheckBox();
+            this.chk_FnLock = new System.Windows.Forms.CheckBox();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.gBox_Admin.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.rBtn_Disable);
-            this.groupBox1.Controls.Add(this.rBtn_Enable);
-            this.groupBox1.Location = new System.Drawing.Point(30, 43);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(179, 71);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "FN Lock";
-            // 
-            // rBtn_Disable
-            // 
-            this.rBtn_Disable.AutoSize = true;
-            this.rBtn_Disable.Location = new System.Drawing.Point(94, 29);
-            this.rBtn_Disable.Name = "rBtn_Disable";
-            this.rBtn_Disable.Size = new System.Drawing.Size(72, 17);
-            this.rBtn_Disable.TabIndex = 1;
-            this.rBtn_Disable.TabStop = true;
-            this.rBtn_Disable.Text = "Disable";
-            this.rBtn_Disable.UseVisualStyleBackColor = true;
-            this.rBtn_Disable.CheckedChanged += new System.EventHandler(this.rBtn_Disable_CheckedChanged);
-            // 
-            // rBtn_Enable
-            // 
-            this.rBtn_Enable.AutoSize = true;
-            this.rBtn_Enable.Location = new System.Drawing.Point(18, 29);
-            this.rBtn_Enable.Name = "rBtn_Enable";
-            this.rBtn_Enable.Size = new System.Drawing.Size(68, 17);
-            this.rBtn_Enable.TabIndex = 0;
-            this.rBtn_Enable.TabStop = true;
-            this.rBtn_Enable.Text = "Enable";
-            this.rBtn_Enable.UseVisualStyleBackColor = true;
-            this.rBtn_Enable.CheckedChanged += new System.EventHandler(this.rBtn_Enable_CheckedChanged);
             // 
             // notifyIcon1
             // 
@@ -108,7 +73,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(12, 133);
+            this.linkLabel1.Location = new System.Drawing.Point(12, 104);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(94, 13);
             this.linkLabel1.TabIndex = 2;
@@ -120,9 +85,9 @@
             // 
             this.groupBox2.Controls.Add(this.rBtn_FnCtrlNone);
             this.groupBox2.Controls.Add(this.rBtn_FnCtrlSwap);
-            this.groupBox2.Location = new System.Drawing.Point(30, 120);
+            this.groupBox2.Location = new System.Drawing.Point(16, 21);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(179, 71);
+            this.groupBox2.Size = new System.Drawing.Size(167, 71);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "FN <-> Ctrl Swap";
@@ -131,7 +96,7 @@
             // rBtn_FnCtrlNone
             // 
             this.rBtn_FnCtrlNone.AutoSize = true;
-            this.rBtn_FnCtrlNone.Location = new System.Drawing.Point(94, 29);
+            this.rBtn_FnCtrlNone.Location = new System.Drawing.Point(88, 29);
             this.rBtn_FnCtrlNone.Name = "rBtn_FnCtrlNone";
             this.rBtn_FnCtrlNone.Size = new System.Drawing.Size(72, 17);
             this.rBtn_FnCtrlNone.TabIndex = 1;
@@ -143,7 +108,7 @@
             // rBtn_FnCtrlSwap
             // 
             this.rBtn_FnCtrlSwap.AutoSize = true;
-            this.rBtn_FnCtrlSwap.Location = new System.Drawing.Point(18, 29);
+            this.rBtn_FnCtrlSwap.Location = new System.Drawing.Point(12, 29);
             this.rBtn_FnCtrlSwap.Name = "rBtn_FnCtrlSwap";
             this.rBtn_FnCtrlSwap.Size = new System.Drawing.Size(68, 17);
             this.rBtn_FnCtrlSwap.TabIndex = 0;
@@ -154,12 +119,13 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(48, 203);
+            this.button1.Location = new System.Drawing.Point(52, 142);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(148, 40);
+            this.button1.Size = new System.Drawing.Size(150, 40);
             this.button1.TabIndex = 3;
             this.button1.Text = "관리자권한으로 실행";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // lb_privilege
@@ -171,20 +137,54 @@
             this.lb_privilege.ForeColor = System.Drawing.Color.Blue;
             this.lb_privilege.Location = new System.Drawing.Point(0, 0);
             this.lb_privilege.Name = "lb_privilege";
-            this.lb_privilege.Size = new System.Drawing.Size(246, 34);
+            this.lb_privilege.Size = new System.Drawing.Size(261, 34);
             this.lb_privilege.TabIndex = 4;
             this.lb_privilege.Text = "유저권한으로 실행 중";
             this.lb_privilege.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // gBox_Admin
+            // 
+            this.gBox_Admin.Controls.Add(this.groupBox2);
+            this.gBox_Admin.Location = new System.Drawing.Point(26, 188);
+            this.gBox_Admin.Name = "gBox_Admin";
+            this.gBox_Admin.Size = new System.Drawing.Size(202, 164);
+            this.gBox_Admin.TabIndex = 5;
+            this.gBox_Admin.TabStop = false;
+            this.gBox_Admin.Text = "관리자권한 필요 기능";
+            this.gBox_Admin.Visible = false;
+            // 
+            // chk_StartUp
+            // 
+            this.chk_StartUp.AutoSize = true;
+            this.chk_StartUp.Location = new System.Drawing.Point(53, 47);
+            this.chk_StartUp.Name = "chk_StartUp";
+            this.chk_StartUp.Size = new System.Drawing.Size(156, 17);
+            this.chk_StartUp.TabIndex = 3;
+            this.chk_StartUp.Text = "Windows 시작시 실행";
+            this.chk_StartUp.UseVisualStyleBackColor = true;
+            this.chk_StartUp.CheckedChanged += new System.EventHandler(this.chk_StartUp_CheckedChanged);
+            // 
+            // chk_FnLock
+            // 
+            this.chk_FnLock.AutoSize = true;
+            this.chk_FnLock.Location = new System.Drawing.Point(53, 75);
+            this.chk_FnLock.Name = "chk_FnLock";
+            this.chk_FnLock.Size = new System.Drawing.Size(104, 17);
+            this.chk_FnLock.TabIndex = 6;
+            this.chk_FnLock.Text = "Fn Lock 사용";
+            this.chk_FnLock.UseVisualStyleBackColor = true;
+            this.chk_FnLock.CheckedChanged += new System.EventHandler(this.chk_FnLock_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(251, 255);
-            this.Controls.Add(this.lb_privilege);
+            this.ClientSize = new System.Drawing.Size(262, 133);
+            this.Controls.Add(this.chk_FnLock);
+            this.Controls.Add(this.chk_StartUp);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.gBox_Admin);
+            this.Controls.Add(this.lb_privilege);
             this.Controls.Add(this.linkLabel1);
-            this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("굴림", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -195,21 +195,16 @@
             this.Text = "TrackPoint Fn Locker";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Resize += new System.EventHandler(this.Form1_Resize);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.gBox_Admin.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton rBtn_Enable;
-        private System.Windows.Forms.RadioButton rBtn_Disable;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
@@ -219,6 +214,9 @@
         private System.Windows.Forms.RadioButton rBtn_FnCtrlSwap;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label lb_privilege;
+        private System.Windows.Forms.GroupBox gBox_Admin;
+        private System.Windows.Forms.CheckBox chk_StartUp;
+        private System.Windows.Forms.CheckBox chk_FnLock;
     }
 }
 

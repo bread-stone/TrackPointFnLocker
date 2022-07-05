@@ -2,33 +2,40 @@
 using System;
 using System.Windows.Forms;
 
-namespace TrackPointFnLocker
-{
-    public partial class Form1 : Form
-    {
+namespace TrackPointFnLocker {
+    public partial class Form1 : Form {
         private KeybdHooker hooker;
-        public Form1()
-        {
+        public Form1() {
             InitializeComponent();
             hooker = new KeybdHooker();
-            rBtn_Enable.Checked = true;
+            
             rBtn_FnCtrlNone.Checked = true;
             this.Load += Form1_Load;
             exitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
+        private void Form1_Load(object sender, EventArgs e) {
             hooker.Start();
             if (Admin.hasPrivilege()) {
                 lb_privilege.Text = "관리자권한으로 실행 중";
                 lb_privilege.ForeColor = System.Drawing.Color.Red;
                 button1.Enabled = false;
+                gBox_Admin.Enabled = true;
             } else {
                 lb_privilege.Text = "유저권한으로 실행 중";
                 lb_privilege.ForeColor = System.Drawing.Color.Blue;
                 button1.Text = "관리자권한으로 실행";
+                gBox_Admin.Enabled = false;
             }
+
+            if (RegHelper.getFnLock() == 1) {
+                chk_FnLock.Checked = true;
+            }                
+            else {
+                chk_FnLock.Checked = false;
+            }
+                
+
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e) {
@@ -51,9 +58,8 @@ namespace TrackPointFnLocker
             }
         }
 
-       
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e) {
-            if(Visible)
+            if (Visible)
                 Visible = false;
             hooker.Stop();
             notifyIcon1.Visible = false;
@@ -82,14 +88,6 @@ namespace TrackPointFnLocker
             System.Diagnostics.Process.Start("https://github.com/bread-stone/TrackPointFnLocker");
         }
 
-        private void rBtn_Enable_CheckedChanged(object sender, EventArgs e) {
-            hooker.ResumeFnLock();
-        }
-
-        private void rBtn_Disable_CheckedChanged(object sender, EventArgs e) {
-            hooker.PauseFnLock();
-        }
-
         private void rBtn_FnCtrlSwap_CheckedChanged(object sender, EventArgs e) {
             hooker.SwapFnCtrl();
         }
@@ -103,7 +101,24 @@ namespace TrackPointFnLocker
                 RegHelper.SetRestart();
                 RegHelper.SetAdmin();
                 this.Close();
-            } 
-        }       
+            }
+        }
+        private void chk_StartUp_CheckedChanged(object sender, EventArgs e) {
+            if (chk_StartUp.Checked) {
+                RegHelper.AddStartUp(Application.ExecutablePath);
+            } else {
+                RegHelper.RemoveStartup();
+            }
+        }
+
+        private void chk_FnLock_CheckedChanged(object sender, EventArgs e) {
+            if (chk_FnLock.Checked) {
+                RegHelper.SetFnLock();
+                hooker.ResumeFnLock();
+            } else {
+                RegHelper.ResetFnLock();
+                hooker.PauseFnLock();
+            }
+        }
     }
 }
