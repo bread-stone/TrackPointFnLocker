@@ -14,8 +14,14 @@ namespace TrackPointFnLocker
         [STAThread]
         static void Main()
         {
-            if (!IsDuplicated())
-                RunApplication();
+            if (!IsDuplicated()) {
+                if (CheckAdminMode()) {
+                    RegHelper.ResetAdmin();
+                    RunAsAdmin();
+                } else {
+                    RunApplication();
+                }
+            }
         }
 
         private static bool IsDuplicated() {
@@ -41,6 +47,25 @@ namespace TrackPointFnLocker
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, "Exception");
                 return true;
+            }
+        }
+
+        private static bool CheckAdminMode() {
+            return (RegHelper.getAdmin() == 1);
+        }
+
+        private static void RunAsAdmin() {
+            try {
+                ProcessStartInfo procInfo = new ProcessStartInfo();
+                procInfo.UseShellExecute = true;
+                procInfo.FileName = Application.ExecutablePath;
+                procInfo.WorkingDirectory = Environment.CurrentDirectory;
+                procInfo.Verb = "runas";
+                Process.Start(procInfo);
+            } catch (Exception ex) {
+                // 사용자가 프로그램을 관리자 권한으로 실행하기를 원하지 않을 경우에 대한 처리
+                MessageBox.Show(ex.Message);
+                return;
             }
         }
 

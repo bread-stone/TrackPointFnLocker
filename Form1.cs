@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Windows.Forms;
 
 namespace TrackPointFnLocker
@@ -18,10 +19,17 @@ namespace TrackPointFnLocker
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
             hooker.Start();
+            if (Admin.hasPrivilege()) {
+                lb_privilege.Text = "관리자권한으로 실행 중";
+                lb_privilege.ForeColor = System.Drawing.Color.Red;
+                button1.Enabled = false;
+            } else {
+                lb_privilege.Text = "유저권한으로 실행 중";
+                lb_privilege.ForeColor = System.Drawing.Color.Blue;
+                button1.Text = "관리자권한으로 실행";
+            }
         }
-        
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e) {
             Show();
@@ -43,15 +51,26 @@ namespace TrackPointFnLocker
             }
         }
 
+       
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e) {
+            if(Visible)
+                Visible = false;
             hooker.Stop();
             notifyIcon1.Visible = false;
             Environment.Exit(0);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
-            e.Cancel = true;
-            goTray();
+            if (RegHelper.getRestart() == 0) {
+                e.Cancel = true;
+                goTray();
+            } else {
+                RegHelper.ResetRestart();
+                hooker.Stop();
+                notifyIcon1.Visible = false;
+                Application.Exit();
+                System.Diagnostics.Process.Start(Application.ExecutablePath);
+            }
         }
 
         private void goTray() {
@@ -78,5 +97,13 @@ namespace TrackPointFnLocker
         private void rBtn_FnCtrlNone_CheckedChanged(object sender, EventArgs e) {
             hooker.NormalFnCtrl();
         }
+
+        private void button1_Click(object sender, EventArgs e) {
+            if (!Admin.hasPrivilege()) {
+                RegHelper.SetRestart();
+                RegHelper.SetAdmin();
+                this.Close();
+            } 
+        }       
     }
 }
