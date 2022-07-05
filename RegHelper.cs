@@ -7,7 +7,34 @@ using System.Text;
 namespace TrackPointFnLocker {
     internal class RegHelper {
 
-        
+
+        private static readonly string _scanCodeMapRegPath =
+            @"SYSTEM\CurrentControlSet\Control\Keyboard Layout";
+
+        private static RegistryKey GetLMRegKey(string regPath, bool writable) {
+            return Registry.LocalMachine.OpenSubKey(regPath, writable);
+        }
+        public static byte[] GetScanCodeMap() {
+            RegistryKey reg = GetLMRegKey(_scanCodeMapRegPath, false);
+            object obj = reg.GetValue("Scancode Map");
+            reg.Close();
+            if (obj != null) {
+                return (byte[])obj;
+            } else {
+                return new byte[] { 0x00 };
+            }
+        }
+
+        public static void SetScanCodeMap(byte[] value) {
+            RegistryKey reg = GetLMRegKey(_scanCodeMapRegPath, true);
+            reg.SetValue("Scancode Map", value, RegistryValueKind.Binary);
+            reg.Close();
+        }
+        public static void ResetScanCodeMap() {
+            RegistryKey reg = GetLMRegKey(_scanCodeMapRegPath, true);
+            reg.DeleteValue("Scancode Map");
+            reg.Close();
+        }
 
         public static void SetRestart() {
             SetValue("restart", 1);
@@ -68,11 +95,18 @@ namespace TrackPointFnLocker {
         }
 
         private static void SetValue(String key, object value) {
-            getSubKey().SetValue(key, value);
+            using (var regKey = getSubKey()) {
+                regKey.SetValue(key, value);
+                regKey.Close();
+            }
         }
 
         private static object GetValue(String key) {
-            return getSubKey().GetValue(key);
+            using (var regKey = getSubKey()) {
+                object obj = regKey.GetValue(key);
+                regKey.Close();
+                return obj;
+            }
         }
 
         private static RegistryKey getSubKey() {

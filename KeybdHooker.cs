@@ -56,15 +56,15 @@ namespace TrackPointFnLocker {
             isFnLock = true;
         }
 
-        public void SwapFnCtrl() {
-            isFnCtrlSwap = true;
-        }
+        //public void SwapFnCtrl() {
+        //    isFnCtrlSwap = true;
+        //}
 
-        public void NormalFnCtrl() {
-            isFnCtrlSwap = false;
-        }
+        //public void NormalFnCtrl() {
+        //    isFnCtrlSwap = false;
+        //}
 
-        private static bool swapPressed = false;
+        //private static bool swapPressed = false;
 
         private static bool ReplaceKey(byte key) {
             if (isFnEmulation) {
@@ -84,38 +84,38 @@ namespace TrackPointFnLocker {
 
             if (wParam == (IntPtr)WM_SYSKEYDOWN) {
                 int vkCode = Marshal.ReadInt32(lParam);
-                Console.WriteLine("SYSKEY + " + vkCode.ToString());
+                //Console.WriteLine("SYSKEY + " + vkCode.ToString());
             }
             if (code >= 0 && (wParam == (IntPtr)WM_KEYDOWN)) {
                 int vkCode = Marshal.ReadInt32(lParam);
 
-                if (isFnCtrlSwap) {
-                    //int vkCode = Marshal.ReadInt32(lParam);
-                    if (vkCode == (int)Keys.LControlKey) {
+                //if (isFnCtrlSwap) {
+                //    //int vkCode = Marshal.ReadInt32(lParam);
+                //    if (vkCode == (int)Keys.LControlKey) {
 
-                        if (!swapPressed) {
-                            Console.WriteLine("swap : ctrl -> fn");
-                            swapPressed = true;
-                            keybd_event((byte)Keys.F23, 0, (uint)wParam, 0);
-                        } else {
-                            swapPressed = false;
-                        }
-                        return (IntPtr)1;
-                    } else if (vkCode == (int)Keys.F23) {
+                //        if (!swapPressed) {
+                //            Console.WriteLine("swap : ctrl -> fn");
+                //            swapPressed = true;
+                //            keybd_event((byte)Keys.F23, 0, (uint)wParam, 0);
+                //        } else {
+                //            swapPressed = false;
+                //        }
+                //        return (IntPtr)1;
+                //    } else if (vkCode == (int)Keys.F23) {
 
-                        if (!swapPressed) {
-                            Console.WriteLine("swap : fn -> ctrl");
-                            swapPressed = true;
-                            keybd_event((byte)Keys.LControlKey, 0, (uint)wParam, 0);
+                //        if (!swapPressed) {
+                //            Console.WriteLine("swap : fn -> ctrl");
+                //            swapPressed = true;
+                //            keybd_event((byte)Keys.LControlKey, 0, (uint)wParam, 0);
 
-                        } else {
-                            swapPressed = false;
-                        }
+                //        } else {
+                //            swapPressed = false;
+                //        }
 
-                        return (IntPtr)1;
-                    }
-                }
-                Console.WriteLine("" + vkCode.ToString());
+                //        return (IntPtr)1;
+                //    }
+                //}
+                //Console.WriteLine("" + vkCode.ToString());
                 if (isFnLock) {
                     switch (vkCode) {
                         case (int)Keys.VolumeMute:
