@@ -113,6 +113,23 @@ namespace TrackPointFnLocker {
             return Registry.CurrentUser.CreateSubKey("SOFTWARE").CreateSubKey("TPFnLock");
         }
 
+        public static bool GetStartUp(String executablePath) {
+            using (var regKey = GetRegKey(_startupRegPath, true)) {
+                bool ret = false;
+                try {
+
+                    object obj = regKey.GetValue("TPFnLock");
+                    if (obj != null && (String)obj == executablePath)
+                        ret = true;
+
+                    regKey.Close();
+
+                } catch (Exception ex) {
+                    Console.WriteLine(ex.Message);
+                }
+                return ret;
+            }
+        }
 
         public static void AddStartUp(String executablePath) {
             using (var regKey = GetRegKey(_startupRegPath, true)) {

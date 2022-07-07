@@ -71,7 +71,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(12, 287);
+            this.linkLabel1.Location = new System.Drawing.Point(12, 272);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(94, 13);
             this.linkLabel1.TabIndex = 2;
@@ -134,6 +134,7 @@
             this.chk_FnCtrlSwap.TabIndex = 0;
             this.chk_FnCtrlSwap.Text = "Fn <-> Ctrl 바꾸기";
             this.chk_FnCtrlSwap.UseVisualStyleBackColor = true;
+            this.chk_FnCtrlSwap.Visible = false;
             this.chk_FnCtrlSwap.CheckedChanged += new System.EventHandler(this.chk_FnCtrlSwap_CheckedChanged);
             // 
             // label1
@@ -148,7 +149,7 @@
             // chk_CtrlCapsLockSwap
             // 
             this.chk_CtrlCapsLockSwap.AutoSize = true;
-            this.chk_CtrlCapsLockSwap.Location = new System.Drawing.Point(53, 222);
+            this.chk_CtrlCapsLockSwap.Location = new System.Drawing.Point(53, 195);
             this.chk_CtrlCapsLockSwap.Name = "chk_CtrlCapsLockSwap";
             this.chk_CtrlCapsLockSwap.Size = new System.Drawing.Size(184, 17);
             this.chk_CtrlCapsLockSwap.TabIndex = 8;
@@ -158,7 +159,7 @@
             // 
             // lb_message
             // 
-            this.lb_message.Location = new System.Drawing.Point(0, 242);
+            this.lb_message.Location = new System.Drawing.Point(0, 225);
             this.lb_message.Name = "lb_message";
             this.lb_message.Size = new System.Drawing.Size(261, 24);
             this.lb_message.TabIndex = 9;
@@ -167,7 +168,7 @@
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(262, 309);
+            this.ClientSize = new System.Drawing.Size(262, 295);
             this.Controls.Add(this.lb_message);
             this.Controls.Add(this.chk_CtrlCapsLockSwap);
             this.Controls.Add(this.chk_FnCtrlSwap);

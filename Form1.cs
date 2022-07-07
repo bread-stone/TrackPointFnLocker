@@ -11,6 +11,9 @@ namespace TrackPointFnLocker {
             hooker = new KeybdHooker();
             this.Load += Form1_Load;
             exitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
+
+           
+                //goTray();
         }
 
         private void enableAdminGroup(bool enabled) {
@@ -33,12 +36,8 @@ namespace TrackPointFnLocker {
                 enableAdminGroup(false);
             }
 
-            if (RegHelper.getFnLock() == 1) {
-                chk_FnLock.Checked = true;
-            }                
-            else {
-                chk_FnLock.Checked = false;
-            }
+            chk_StartUp.Checked = RegHelper.GetStartUp(Application.ExecutablePath);
+            chk_FnLock.Checked = RegHelper.getFnLock() == 1;
 
             byte[] value = RegHelper.GetScanCodeMap();
             if (isSameValue(value, fnCtrlSwapValue)) {
@@ -47,6 +46,13 @@ namespace TrackPointFnLocker {
             } else if (isSameValue(value, ctrlCapsLockSwapValue)) {
                 chk_CtrlCapsLockSwap.Checked = true;
                 chk_FnCtrlSwap.Enabled = hasAdmin && false;
+            }
+
+            if (chk_StartUp.Checked) {
+                WindowState = FormWindowState.Minimized;
+                ShowInTaskbar = false;
+                Visible = false;
+                notifyIcon1.Visible = true;
             }
         }
 
